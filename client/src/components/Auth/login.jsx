@@ -48,7 +48,9 @@ class LoginForm extends Component {
   };
 
   handleSubmit = () => {
-    const { username, password } = this.state;
+    const username = this.state.username;
+    const password = this.state.password;
+    //const thought = this.state.thought;
 
     axios
       .post(
@@ -58,6 +60,7 @@ class LoginForm extends Component {
           User: {
             Username: username,
             Password: password,
+            //Thought: thought,
           },
         },
 
