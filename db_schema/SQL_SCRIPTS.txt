@@ -1,0 +1,113 @@
+## COMENT ##
+CREATE TABLE "comment"
+(
+ "video_id" uuid NOT NULL,
+ "user_id"  uuid NOT NULL,
+ "text"     text NOT NULL,
+ CONSTRAINT "PK_comment" PRIMARY KEY ( "video_id" ),
+ CONSTRAINT "FK_58" FOREIGN KEY ( "user_id" ) REFERENCES "User" ( "id" ),
+ CONSTRAINT "FK_60" FOREIGN KEY ( "video_id" ) REFERENCES "video" ( "id" )
+);
+
+CREATE INDEX "fkIdx_58" ON "comment"
+(
+ "user_id"
+);
+
+CREATE INDEX "fkIdx_60" ON "comment"
+(
+ "video_id"
+);
+
+## SESSION ##
+CREATE TABLE "session"
+(
+ "session_token" varchar(50) NOT NULL,
+ "user_id"       uuid NOT NULL,
+ "login"         timestamp NOT NULL,
+ "time_out"      timestamp NOT NULL,
+ CONSTRAINT "PK_session" PRIMARY KEY ( "session_token" ),
+ CONSTRAINT "FK_66" FOREIGN KEY ( "user_id" ) REFERENCES "User" ( "id" )
+);
+
+CREATE INDEX "fkIdx_66" ON "session"
+(
+ "user_id"
+);
+
+## SUBSCRIBERS ##
+CREATE TABLE "subscribers"
+(
+ "user_id"       uuid NOT NULL,
+ "subscriber_id" uuid NOT NULL,
+ CONSTRAINT "PK_subscribers" PRIMARY KEY ( "user_id" ),
+ CONSTRAINT "FK_47" FOREIGN KEY ( "user_id" ) REFERENCES "User" ( "id" ),
+ CONSTRAINT "FK_51" FOREIGN KEY ( "subscriber_id" ) REFERENCES "User" ( "id" )
+);
+
+CREATE INDEX "fkIdx_47" ON "subscribers"
+(
+ "user_id"
+);
+
+CREATE INDEX "fkIdx_51" ON "subscribers"
+(
+ "subscriber_id"
+);
+
+## THUMBNAIL ##
+CREATE TABLE "thumbnail"
+(
+ "video_id" uuid NOT NULL,
+ "address"  varchar(50) NOT NULL,
+ CONSTRAINT "PK_thumbnail" PRIMARY KEY ( "video_id" ),
+ CONSTRAINT "FK_27" FOREIGN KEY ( "video_id" ) REFERENCES "video" ( "id" )
+);
+
+CREATE INDEX "fkIdx_27" ON "thumbnail"
+(
+ "video_id"
+);
+
+## USER ##
+CREATE TABLE "User"
+(
+ "id"     uuid NOT NULL,
+ "name"   varchar(50) NOT NULL,
+ "email"  varchar(50) NOT NULL,
+ "passwd" varchar(50) NOT NULL,
+ CONSTRAINT "PK_user" PRIMARY KEY ( "id" )
+);
+
+## VIDEO  ##
+CREATE TABLE "video"
+(
+ "id"           uuid NOT NULL,
+ "user_id"      uuid NOT NULL,
+ "publish_date" date NOT NULL,
+ "view_count"   bigint NOT NULL,
+ "title"        varchar(50) NOT NULL,
+ CONSTRAINT "PK_video" PRIMARY KEY ( "id" ),
+ CONSTRAINT "FK_22" FOREIGN KEY ( "user_id" ) REFERENCES "User" ( "id" ) MATCH FULL
+);
+
+CREATE INDEX "fkIdx_22" ON "video"
+(
+ "user_id"
+);
+
+COMMENT ON CONSTRAINT "FK_22" ON "video" IS 'publishes';
+
+## VIDEO CONTENT ## 
+CREATE TABLE "video_content"
+(
+ "video_id" uuid NOT NULL,
+ "address"  varchar(50) NOT NULL,
+ CONSTRAINT "PK_video_content" PRIMARY KEY ( "video_id" ),
+ CONSTRAINT "FK_32" FOREIGN KEY ( "video_id" ) REFERENCES "video" ( "id" )
+);
+
+CREATE INDEX "fkIdx_32" ON "video_content"
+(
+ "video_id"
+);
