@@ -30,6 +30,16 @@ func IsLoggedIn(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	return
 }
 
+func VideoPlayerGet(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	//Will get hash key from url (?hash=<hash-key>) and send it to the decoder that will then save the id of the video
+	return
+}
+
+func VideoPlayerPost(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	//Will use the decripted id from video and get the video from the database to then use it in the post request
+	return
+}
+
 //General options/request headers
 func preflightHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("handling options...")
@@ -49,6 +59,10 @@ func preflightHandler(w http.ResponseWriter, r *http.Request) {
 //Router creation
 func CreateRouter() *httprouter.Router {
 	router := httprouter.New()
+	router.GET("/",IsLoggedIn)
+	router.POST("/",Login)
+	router.GET("/watch",VideoPlayerGet)
+	router.POST("/watch",VideoPlayerPost)
 	router.GET("/", IsLoggedIn)
 	router.POST("/register", Register)
 	//router.POST("/login", Login)
