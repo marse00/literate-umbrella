@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-let config = {
-  headers: {
-    withCredentials: true,
-    "Content-Type": "text/html",
-  },
-};
+
 
 class LoginForm extends Component {
   constructor(props) {
@@ -14,8 +9,11 @@ class LoginForm extends Component {
     this.state = {
       username: "",
       password: "",
+      usernameError: "",
+      passwordError: ""
     };
   }
+  o
   render() {
     return (
       <React.Fragment>
@@ -28,6 +26,7 @@ class LoginForm extends Component {
             onChange={this.handleChange}
             required
           />
+           <div>{this.state.usernameError} </div>
           <input
             type="password"
             name="password"
@@ -35,39 +34,50 @@ class LoginForm extends Component {
             onChange={this.handleChange}
             required
           />
-          <button type="submit">Register</button>
+          <div>{this.state.passwordError} </div>
+          <button type="submit">Login</button>
         </form>
       </React.Fragment>
     );
   }
   handleChange = (event) => {
-    console.log(event.target);
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = () => {
+
+
+  handleSubmit = (event) => {
+    event.preventDefault()
     const username = this.state.username;
     const password = this.state.password;
-    //const thought = this.state.thought;
 
+    
+
+    let config = {
+      headers: {
+        withCredentials: true,
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    };
     axios
       .post(
-        "http://localhost:8080/",
-
+        "/login",
         {
           User: {
             Username: username,
             Password: password,
-            //Thought: thought,
           },
         },
-
         config
       )
-      .then(function (response) {
-        console.log(response);
+      
+      .then(response => {
+        if (response.status === 200) {
+          console.log("response status: " + response.status);
+        }
       })
       .catch(function (error) {
         console.log(error);

@@ -21,6 +21,7 @@ class SignUpForm extends Component {
       <React.Fragment>
         <h1>Register</h1>
         <form onSubmit={this.handleSubmit}>
+        <h6>Username:</h6>
           <input
             type="username"
             name="username"
@@ -29,6 +30,7 @@ class SignUpForm extends Component {
             required
           />
           <div>{this.state.usernameError} </div>
+          <h6>E-mail:</h6>
           <input
             type="email"
             name="email"
@@ -37,6 +39,7 @@ class SignUpForm extends Component {
             required
           />
           <div>{this.state.emailError} </div>
+          <h6>Password:</h6>
           <input
             type="password"
             name="password"
@@ -45,6 +48,7 @@ class SignUpForm extends Component {
             required
           />
           <div>{this.state.passwordError} </div>
+          <h6>Password confirmation:</h6>
           <input
             type="password"
             name="password_confirmation"
@@ -88,7 +92,7 @@ class SignUpForm extends Component {
   
       axios
         .post(
-          "http://localhost:8080/register",
+          "/register",
   
           {
             User: {
