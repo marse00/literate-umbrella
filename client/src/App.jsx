@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-import LoginForm from "./components/Auth/Login";
+import LoginForm from "./components/Auth/login";
 import Nav from "./components/Links/Nav"
 import Home from "./components/Links/Home"
 import About from "./components/Links/About"

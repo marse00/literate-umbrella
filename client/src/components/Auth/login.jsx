@@ -77,6 +77,9 @@ class LoginForm extends Component {
       .then(response => {
         if (response.status === 200) {
           console.log("response status: " + response.status);
+          localStorage.setItem("username", response.headers["username"])
+          localStorage.setItem("loggedIn", true)
+          
         }
       })
       .catch(function (error) {

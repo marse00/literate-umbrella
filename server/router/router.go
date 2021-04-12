@@ -44,7 +44,6 @@ func Login(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 //Example of a GET req handling tb removed if needed
 func IsLoggedIn(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	fmt.Println("GET came through")
-	http.SetCookie(w, &http.Cookie{Name: "testCookie", Value: "123", Path: "/", Domain: ".localhost", HttpOnly: false, SameSite: http.SameSiteNoneMode, Secure: true})
 
 	return
 }
@@ -79,10 +78,9 @@ func preflightHandler(w http.ResponseWriter, r *http.Request) {
 //Router creation
 func CreateRouter() *httprouter.Router {
 	router := httprouter.New()
-	router.GET("/",IsLoggedIn)
-	router.POST("/",Login)
-	router.GET("/watch",VideoPlayerGet)
-	router.POST("/watch",VideoPlayerPost)
+	router.POST("/", Login)
+	router.GET("/watch", VideoPlayerGet)
+	router.POST("/watch", VideoPlayerPost)
 	router.GET("/", IsLoggedIn)
 	router.POST("/register", Register)
 	router.POST("/login", Login)
